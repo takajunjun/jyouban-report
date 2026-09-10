@@ -715,15 +715,13 @@
       var nm = (n.name || '').trim();
       if (!nm) return null;
       var extras = [];
-      if (n.tag) extras.push(n.tag);
-      if (n.health) extras.push(n.health);
-      return { nm: nm, extra: extras.length ? '（' + extras.join('／') + '）' : '' };
+      if (n.tag) extras.push('区分：' + n.tag);
+      if (n.health) extras.push('体調：' + n.health);
+      return { nm: nm, extra: extras.join('／') };
     }).filter(Boolean);
-    var maxNameLen = nameEntries.reduce(function (m, e) { return Math.max(m, e.nm.length); }, 0);
-    var namesStr = nameEntries.map(function (e) {
-      if (!e.extra) return e.nm;
-      var pad = '　'.repeat(Math.max(1, maxNameLen - e.nm.length + 1));
-      return e.nm + pad + e.extra;
+    var namesStr = nameEntries.map(function (e, i) {
+      var line = (i + 1) + '. ' + e.nm;
+      return e.extra ? line + '\n　　' + e.extra : line;
     }).join('\n');
     return {
       site: els.site.value.trim() || '（現場名未記入）',
