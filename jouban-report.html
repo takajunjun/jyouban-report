@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>上番報告</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #182B4A;
+    --ink-soft: #4B5A72;
+    --paper: #F5F3EE;
+    --surface: #FFFFFF;
+    --surface-sunken: #EEEBE2;
+    --accent: #E2790E;
+    --accent-deep: #9C5308;
+    --accent-tint: #FBE7CE;
+    --line: #DDD6C7;
+    --ok: #2F7D52;
+    --ok-tint: #E1F0E6;
+    --warn: #B23A2E;
+    --warn-tint: #F7E2DF;
+    --focus: #1D5FBF;
+    --shadow: 0 1px 2px rgba(24,43,74,0.06), 0 6px 20px -8px rgba(24,43,74,0.18);
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234B5A72' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #E9EDF5;
+      --ink-soft: #A9B4C6;
+      --paper: #0F1622;
+      --surface: #17202E;
+      --surface-sunken: #10161F;
+      --accent: #F0923B;
+      --accent-deep: #FBC98C;
+      --accent-tint: #3A2A16;
+      --line: #2A3546;
+      --ok: #6FBF8E;
+      --ok-tint: #163425;
+      --warn: #E38077;
+      --warn-tint: #3A1E1B;
+      --focus: #6FA1F5;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -10px rgba(0,0,0,0.55);
+      --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A9B4C6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ink: #E9EDF5;
+    --ink-soft: #A9B4C6;
+    --paper: #0F1622;
+    --surface: #17202E;
+    --surface-sunken: #10161F;
+    --accent: #F0923B;
+    --accent-deep: #FBC98C;
+    --accent-tint: #3A2A16;
+    --line: #2A3546;
+    --ok: #6FBF8E;
+    --ok-tint: #163425;
+    --warn: #E38077;
+    --warn-tint: #3A1E1B;
+    --focus: #6FA1F5;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -10px rgba(0,0,0,0.55);
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A9B4C6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Sans JP", "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
+    padding: 0 16px;
+    padding-block: 20px 96px;
+  }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  header.top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 20px;
+    padding-block: 4px 22px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .brand h1 {
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  .brand .co {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .now-clock {
+    font-family: "JetBrains Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  .lede {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin: -14px 0 26px;
+    max-width: 62ch;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  section.card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .step-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin: 0 0 14px;
+  }
+
+  .step-eyebrow .num {
+    display: inline-grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .tpl-list {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .tpl-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface-sunken);
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color .15s ease, background .15s ease;
+  }
+
+  .tpl-btn:hover { border-color: var(--accent); }
+
+  .tpl-btn[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--accent-tint);
+  }
+
+  .tpl-btn .ic {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .tpl-btn[aria-pressed="true"] .ic {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .tpl-btn[aria-pressed="true"] .ic svg { stroke: #fff; }
+  .tpl-btn .ic svg { width: 16px; height: 16px; stroke: var(--ink-soft); fill: none; stroke-width: 1.8; }
+
+  .tpl-btn .tpl-name {
+    font-weight: 700;
+    font-size: 0.92rem;
+    display: block;
+  }
+
+  .tpl-btn .tpl-desc {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .field {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .field label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+
+  .field input, .field textarea, .field select {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 11px;
+    width: 100%;
+  }
+
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+  }
+
+  .field.two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .field.two > div { display: grid; gap: 6px; }
+
+  #siteInput {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: var(--chevron);
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    background-size: 16px;
+    padding-right: 36px;
+  }
+
+  textarea { resize: vertical; font-family: "Noto Sans JP", sans-serif; line-height: 1.6; }
+
+  #remarksField { display: none; }
+  #remarksField.show { display: grid; }
+
+  .name-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .name-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: end;
+    padding: 0 2px 5px;
+  }
+
+  .name-header span {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
+  }
+
+  .name-header .nh-num { flex: none; width: 13px; }
+  .name-header .nh-name { flex: 1 1 56px; min-width: 0; max-width: 141px; }
+  .name-header .nh-tag { flex: none; width: 52px; }
+  .name-header .nh-health { flex: none; width: 100px; }
+  .name-header .nh-remove { flex: none; width: 26px; }
+
+  .name-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .name-num {
+    flex: none;
+    width: 13px;
+    text-align: right;
+    font-size: 0.66rem;
+    color: var(--ink-soft);
+    font-family: "JetBrains Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+  }
+
+  .name-row input {
+    flex: 1 1 56px;
+    width: auto;
+    min-width: 0;
+    max-width: 141px;
+    font-size: 0.84rem;
+    padding: 7px 8px;
+  }
+
+  .name-row select {
+    flex: none;
+    width: 84px;
+    padding: 6px 3px;
+    font-size: 0.72rem;
+  }
+
+  .name-row .name-tag { width: 52px; }
+  .name-row .name-health { width: 100px; }
+
+  .name-remove {
+    flex: none;
+    width: 26px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    background: var(--surface-sunken);
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-family: inherit;
+  }
+  .name-remove:hover { border-color: var(--warn); color: var(--warn); }
+  .name-remove svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .add-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  #rosterAddSelect {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+
+  .add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    background: none;
+    border: 1px dashed var(--line);
+    color: var(--accent-deep);
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .add-btn:hover { border-color: var(--accent); }
+  .add-btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+  .add-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .status-pill.ok { background: var(--ok-tint); color: var(--ok); }
+  .status-pill.warn { background: var(--warn-tint); color: var(--warn); }
+
+  #reportBody {
+    min-height: 210px;
+  }
+
+  .preview-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -6px 0 8px;
+  }
+
+  .link-btn {
+    background: none;
+    border: none;
+    color: var(--focus);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 0;
+    font-family: inherit;
+  }
+  .link-btn:hover { text-decoration: underline; }
+
+  .hint {
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .sendbar {
+    position: sticky;
+    bottom: 12px;
+    margin-top: 6px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    border-radius: 12px;
+    padding: 10px;
+  }
+
+  .send-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    padding: 13px 16px;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 700;
+    font-size: 0.98rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: filter .15s ease;
+  }
+  .send-btn:hover { filter: brightness(1.06); }
+  .send-btn:active { filter: brightness(0.96); }
+  .send-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+
+  .fallback-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .fallback-row .hint { margin-top: 0; color: var(--ok); }
+
+  footer.note {
+    max-width: 62ch;
+    margin: 22px auto 0;
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>上番報告</h1>
+      <span class="co">企業警備保障株式会社</span>
+    </div>
+    <div class="now-clock" id="clock"></div>
+  </header>
+
+  <p class="lede">現場到着時に、その場でテンプレートを選んで報告文を作成し、メールで送信します。</p>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="tpl-heading">
+      <p class="step-eyebrow"><span class="num">1</span>報告の種類を選ぶ</p>
+      <div class="tpl-list" id="tplList" role="group" aria-label="報告テンプレート"></div>
+
+      <p class="step-eyebrow"><span class="num">2</span>内容を入力する</p>
+      <div class="field two">
+        <div>
+          <label for="siteInput">現場名</label>
+          <select id="siteInput">
+            <option value="石見空港">石見空港</option>
+            <option value="イオン益田店">イオン益田店</option>
+            <option value="駅前ビルイーガ">駅前ビルイーガ</option>
+            <option value="益田市役所本庁">益田市役所本庁</option>
+            <option value="美都分庁舎">美都分庁舎</option>
+            <option value="内勤">内勤</option>
+            <option value="交通">交通</option>
+          </select>
+          <p class="hint">選択した現場の隊員が自動で入ります（現在の氏名欄は上書きされます）。</p>
+        </div>
+        <div>
+          <label for="whenInput">上番日</label>
+          <input id="whenInput" type="date" />
+        </div>
+      </div>
+      <div class="field">
+        <div class="name-header" id="namesLabel">
+          <span class="nh-num"></span>
+          <span class="nh-name">氏名</span>
+          <span class="nh-tag">勤務形態</span>
+          <span class="nh-health">体調・飲酒</span>
+          <span class="nh-remove"></span>
+        </div>
+        <div class="name-list" id="nameList" role="group" aria-labelledby="namesLabel"></div>
+        <div class="add-row">
+          <select id="rosterAddSelect" aria-label="名簿から選んで追加"></select>
+          <button class="add-btn" id="addNameBtn" type="button">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            手入力で追加
+          </button>
+        </div>
+        <p class="hint">氏名は最大20名まで。この現場の名簿にいる人は上のリストから選ぶと追加されます。名簿にいない人は「手入力で追加」からどうぞ。</p>
+      </div>
+      <div class="field" id="remarksField">
+        <label for="remarksInput">特記事項</label>
+        <textarea id="remarksInput" rows="3" placeholder="現場周辺の状況、異常内容などを記入"></textarea>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="preview-heading">
+      <p class="step-eyebrow"><span class="num">3</span>報告文を確認・修正する</p>
+      <div class="preview-tools">
+        <span class="status-pill ok" id="statusPill">異常なし報告</span>
+        <button class="link-btn" id="resetBtn" type="button">テンプレートを再適用</button>
+      </div>
+      <div class="field">
+        <label for="subjectInput">件名</label>
+        <input id="subjectInput" type="text" />
+      </div>
+      <div class="field">
+        <label for="reportBody">本文（自由に書き換え可）</label>
+        <textarea id="reportBody"></textarea>
+      </div>
+
+      <p class="step-eyebrow" style="margin-top:18px;"><span class="num">4</span>送信する</p>
+      <div class="field">
+        <label for="toInput">宛先</label>
+        <select id="toInput">
+          <option value="masuda2021kigyokeibi@gmail.com">益田支店（通常の報告先）</option>
+          <option value="jun2010takahata17@gmail.com">緊急連絡先（高畑私用）</option>
+        </select>
+      </div>
+      <div class="sendbar">
+        <a class="send-btn" id="sendBtn" href="mailto:">
+          <svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+          メールで送信
+        </a>
+      </div>
+      <div class="fallback-row">
+        <button class="link-btn" id="copyBtn" type="button">本文をコピーする</button>
+        <span class="hint" id="copyStatus" role="status"></span>
+      </div>
+      <p class="hint">「メールで送信」を押すと、お使いのメールアプリが開き、宛先・件名・本文が入力された状態になります。開かない場合は、パソコン・スマホ側で既定のメールアプリが設定されているかご確認ください。それでも開かない場合は「本文をコピーする」でコピーし、メールアプリに直接貼り付けてください。</p>
+    </section>
+  </div>
+
+  <footer class="note">
+    イメージ確認用の試作画面です。現場名・隊員名は益田支店組織図（令和8年8月1日現在）を反映していますが、実際の配置に合わせて随時書き換えてください。文面や区分の選択肢も運用に合わせて調整できます。
+  </footer>
+</div>
+
+<script>
+(function () {
+  var STORE_KEY = 'jouban-report-v1';
+  var MAX_NAMES = 20;
+  var TAGS = ['A', 'B', '日勤', '夜勤', 'A1', 'B1', '研修', '内勤'];
+  var HEALTH = ['良好・飲酒無', '良好・飲酒有', '普通・飲酒無', '普通・飲酒有', '悪い・飲酒無', '悪い・飲酒有'];
+
+  // 2026年8月1日現在・益田支店組織図より
+  var ROSTERS = {
+    '石見空港': ['岩田 賢二（隊長）', '岡﨑 航', '椋 和則', '齋藤 夏陽子', '家古矢 輝虎', '濱田 香', '津田 竜誠', '品川 智子', '原田 佳恋', '増田 みかん', '波田 康宏', '原田 美優', '髙畑 潤（兼）', '増野 敬之（兼）', '野村 和徳（兼）'],
+    'イオン益田店': ['松本 誠騎（隊長）', '松井 晃彦'],
+    '駅前ビルイーガ': ['村田 登（隊長）', '黒川 仁', '野上 和美', '松本 誠騎（兼）'],
+    '益田市役所本庁': ['佐々木 鋭二（隊長）', '末次 修一', '伊村 寿一', '髙畑 潤（兼）', '神澤 和年（兼）'],
+    '美都分庁舎': ['佐々木 賢司（隊長）', '津田 有造', '木原 義夫'],
+    '内勤': ['髙畑 潤', '家古矢 真寿美', '宮内 浩幸', '中村 夏希', '松本 誠騎']
+  };
+
+  var templates = [
+    {
+      id: 'teiji',
+      name: '定刻上番（異常なし）',
+      desc: '定刻に上番し、周辺・資機材に異常なし',
+      status: { label: '異常なし報告', tone: 'ok' },
+      icon: '<path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-4z"/><path d="M9 12l2 2 4-4"/>',
+      needsRemarks: false,
+      subject: function (f) { return '【上番報告】' + f.site + ' ' + f.dateJp; },
+      body: function (f) {
+        return '本日' + f.dateJp + '、' + f.site + 'に定刻上番いたしました。\n\n' +
+          '隊員：\n' + (f.names || '（未記入）');
+      }
+    },
+    {
+      id: 'ijo',
+      name: '特記事項・異常報告',
+      desc: '上番時に確認した特記事項を報告',
+      status: { label: '特記事項あり', tone: 'warn' },
+      icon: '<path d="M12 3l9 16H3L12 3z"/><path d="M12 9v4"/><circle cx="12" cy="16" r="0.7" fill="currentColor"/>',
+      needsRemarks: true,
+      subject: function (f) { return '【特記事項】' + f.site + ' ' + f.dateJp; },
+      body: function (f) {
+        return f.dateJp + '、' + f.site + '上番時に下記の特記事項がございましたのでご報告いたします。\n\n' +
+          '【特記事項】\n' + (f.remarks || '（未記入）') + '\n\n' +
+          '隊員：\n' + (f.names || '（未記入）');
+      }
+    }
+  ];
+
+  var els = {
+    tplList: document.getElementById('tplList'),
+    site: document.getElementById('siteInput'),
+    when: document.getElementById('whenInput'),
+    nameList: document.getElementById('nameList'),
+    addNameBtn: document.getElementById('addNameBtn'),
+    rosterAddSelect: document.getElementById('rosterAddSelect'),
+    remarksField: document.getElementById('remarksField'),
+    remarks: document.getElementById('remarksInput'),
+    subject: document.getElementById('subjectInput'),
+    body: document.getElementById('reportBody'),
+    to: document.getElementById('toInput'),
+    statusPill: document.getElementById('statusPill'),
+    resetBtn: document.getElementById('resetBtn'),
+    sendBtn: document.getElementById('sendBtn'),
+    copyBtn: document.getElementById('copyBtn'),
+    copyStatus: document.getElementById('copyStatus'),
+    clock: document.getElementById('clock')
+  };
+
+  var DEFAULT_HEALTH = '良好・飲酒無';
+
+  var state = { tplId: 'teiji', bodyDirty: false, subjectDirty: false };
+  var names = [{ name: '', tag: '', health: DEFAULT_HEALTH }];
+
+  function blankName() { return { name: '', tag: '', health: DEFAULT_HEALTH }; }
+
+  function toNameObjects(arr) {
+    return (arr || []).map(function (v) {
+      if (v && typeof v === 'object') return { name: v.name || '', tag: v.tag || '', health: v.health || DEFAULT_HEALTH };
+      return { name: v || '', tag: '', health: DEFAULT_HEALTH };
+    });
+  }
+
+  function rosterToNames(site) {
+    var roster = ROSTERS[site];
+    if (!roster) return null;
+    return roster.map(function (n) { return { name: n, tag: '', health: DEFAULT_HEALTH }; });
+  }
+
+  function loadStore() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  }
+  function saveStore(patch) {
+    try {
+      var cur = loadStore();
+      Object.assign(cur, patch);
+      localStorage.setItem(STORE_KEY, JSON.stringify(cur));
+    } catch (e) {}
+  }
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function toDateInputValue(d) {
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  }
+
+  function parseDateOnly(str) {
+    var parts = (str || '').split('-');
+    if (parts.length !== 3) return new Date();
+    return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+  }
+
+  function fieldsFromForm() {
+    var d = parseDateOnly(els.when.value);
+    var dateJp = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日';
+    var nameEntries = names.map(function (n) {
+      var nm = (n.name || '').trim();
+      if (!nm) return null;
+      var extras = [];
+      if (n.tag) extras.push(n.tag);
+      if (n.health) extras.push(n.health);
+      return { nm: nm, extra: extras.length ? '（' + extras.join('／') + '）' : '' };
+    }).filter(Boolean);
+    var maxNameLen = nameEntries.reduce(function (m, e) { return Math.max(m, e.nm.length); }, 0);
+    var namesStr = nameEntries.map(function (e) {
+      if (!e.extra) return e.nm;
+      var pad = '　'.repeat(Math.max(1, maxNameLen - e.nm.length + 1));
+      return e.nm + pad + e.extra;
+    }).join('\n');
+    return {
+      site: els.site.value.trim() || '（現場名未記入）',
+      names: namesStr,
+      remarks: els.remarks.value.trim(),
+      dateJp: dateJp
+    };
+  }
+
+  function currentTemplate() {
+    return templates.filter(function (t) { return t.id === state.tplId; })[0] || templates[0];
+  }
+
+  function renderTplList() {
+    els.tplList.innerHTML = templates.map(function (t) {
+      return '<button type="button" class="tpl-btn" data-id="' + t.id + '" aria-pressed="' + (t.id === state.tplId) + '">' +
+        '<span class="ic"><svg viewBox="0 0 24 24">' + t.icon + '</svg></span>' +
+        '<span><span class="tpl-name">' + t.name + '</span><span class="tpl-desc">' + t.desc + '</span></span>' +
+        '</button>';
+    }).join('');
+    Array.prototype.forEach.call(els.tplList.querySelectorAll('.tpl-btn'), function (btn) {
+      btn.addEventListener('click', function () {
+        state.tplId = btn.getAttribute('data-id');
+        state.bodyDirty = false;
+        state.subjectDirty = false;
+        regenerate();
+      });
+    });
+  }
+
+  function renderNames() {
+    els.nameList.innerHTML = names.map(function (row, i) {
+      var removeBtn = names.length > 1
+        ? '<button type="button" class="name-remove" data-i="' + i + '" aria-label="この氏名を削除"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>'
+        : '';
+      var tagOptions = '<option value="">区分</option>' + TAGS.map(function (tg) {
+        return '<option value="' + tg + '"' + (row.tag === tg ? ' selected' : '') + '>' + tg + '</option>';
+      }).join('');
+      var healthOptions = '<option value="">体調</option>' + HEALTH.map(function (hl) {
+        return '<option value="' + hl + '"' + (row.health === hl ? ' selected' : '') + '>' + hl + '</option>';
+      }).join('');
+      return '<div class="name-row">' +
+        '<span class="name-num">' + (i + 1) + '</span>' +
+        '<input type="text" class="name-input" data-i="' + i + '" placeholder="例）山田 太郎" autocomplete="off" value="' + (row.name || '').replace(/"/g, '&quot;') + '" />' +
+        '<select class="name-tag" data-i="' + i + '" aria-label="勤務形態">' + tagOptions + '</select>' +
+        '<select class="name-health" data-i="' + i + '" aria-label="体調・飲酒">' + healthOptions + '</select>' +
+        removeBtn +
+        '</div>';
+    }).join('');
+
+    Array.prototype.forEach.call(els.nameList.querySelectorAll('.name-input'), function (input) {
+      input.addEventListener('input', function () {
+        var i = parseInt(input.getAttribute('data-i'), 10);
+        names[i].name = input.value;
+        regenerate();
+      });
+      input.addEventListener('change', function () {
+        saveStore({ names: names });
+      });
+    });
+
+    Array.prototype.forEach.call(els.nameList.querySelectorAll('.name-tag'), function (sel) {
+      sel.addEventListener('change', function () {
+        var i = parseInt(sel.getAttribute('data-i'), 10);
+        names[i].tag = sel.value;
+        regenerate();
+        saveStore({ names: names });
+      });
+    });
+
+    Array.prototype.forEach.call(els.nameList.querySelectorAll('.name-health'), function (sel) {
+      sel.addEventListener('change', function () {
+        var i = parseInt(sel.getAttribute('data-i'), 10);
+        names[i].health = sel.value;
+        regenerate();
+        saveStore({ names: names });
+      });
+    });
+
+    Array.prototype.forEach.call(els.nameList.querySelectorAll('.name-remove'), function (btn) {
+      btn.addEventListener('click', function () {
+        var i = parseInt(btn.getAttribute('data-i'), 10);
+        names.splice(i, 1);
+        if (names.length === 0) names = [blankName()];
+        renderNames();
+        regenerate();
+        saveStore({ names: names });
+      });
+    });
+
+    els.addNameBtn.disabled = names.length >= MAX_NAMES;
+    updateRosterAddOptions();
+  }
+
+  function updateRosterAddOptions() {
+    var roster = ROSTERS[els.site.value];
+    if (!roster) {
+      els.rosterAddSelect.innerHTML = '<option value="">この現場の名簿はありません</option>';
+      els.rosterAddSelect.disabled = true;
+      return;
+    }
+    var used = names.map(function (n) { return (n.name || '').trim(); });
+    var remaining = roster.filter(function (n) { return used.indexOf(n) === -1; });
+    if (remaining.length === 0 || names.length >= MAX_NAMES) {
+      els.rosterAddSelect.innerHTML = '<option value="">' + (names.length >= MAX_NAMES ? '氏名が上限です' : '名簿の全員を追加済みです') + '</option>';
+      els.rosterAddSelect.disabled = true;
+      return;
+    }
+    els.rosterAddSelect.disabled = false;
+    els.rosterAddSelect.innerHTML = '<option value="">名簿から追加...</option>' +
+      remaining.map(function (n) {
+        return '<option value="' + n.replace(/"/g, '&quot;') + '">' + n + '</option>';
+      }).join('');
+  }
+
+  function regenerate() {
+    var t = currentTemplate();
+    var f = fieldsFromForm();
+
+    Array.prototype.forEach.call(els.tplList.querySelectorAll('.tpl-btn'), function (btn) {
+      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-id') === t.id));
+    });
+
+    els.statusPill.textContent = t.status.label;
+    els.statusPill.className = 'status-pill ' + t.status.tone;
+
+    els.remarksField.classList.toggle('show', !!t.needsRemarks);
+
+    if (!state.subjectDirty) els.subject.value = t.subject(f);
+    if (!state.bodyDirty) els.body.value = t.body(f);
+
+    updateSendHref();
+  }
+
+  function updateSendHref() {
+    var to = els.to.value.trim();
+    var subject = encodeURIComponent(els.subject.value);
+    var body = encodeURIComponent(els.body.value);
+    els.sendBtn.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + subject + '&body=' + body;
+  }
+
+  function tickClock() {
+    var d = new Date();
+    els.clock.textContent = d.getFullYear() + '/' + pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+
+  function init() {
+    var store = loadStore();
+    els.site.value = store.site || '石見空港';
+    els.to.value = store.to || 'masuda2021kigyokeibi@gmail.com';
+    els.when.value = toDateInputValue(new Date());
+    names = (Array.isArray(store.names) && store.names.length)
+      ? toNameObjects(store.names).slice(0, MAX_NAMES)
+      : (rosterToNames(els.site.value) || [blankName()]);
+
+    renderTplList();
+    renderNames();
+    regenerate();
+    tickClock();
+    setInterval(tickClock, 30000);
+
+    [els.site, els.when, els.remarks].forEach(function (el) {
+      el.addEventListener('input', function () { regenerate(); });
+    });
+
+    els.site.addEventListener('change', function () {
+      saveStore({ site: els.site.value });
+      var roster = rosterToNames(els.site.value.trim());
+      if (roster) {
+        names = roster;
+        renderNames();
+        regenerate();
+        saveStore({ names: names });
+      } else {
+        updateRosterAddOptions();
+      }
+    });
+
+    els.rosterAddSelect.addEventListener('change', function () {
+      var val = els.rosterAddSelect.value;
+      if (!val || names.length >= MAX_NAMES) return;
+      names.push({ name: val, tag: '', health: DEFAULT_HEALTH });
+      renderNames();
+      regenerate();
+      saveStore({ names: names });
+    });
+    els.to.addEventListener('change', function () { saveStore({ to: els.to.value }); updateSendHref(); });
+
+    els.body.addEventListener('input', function () { state.bodyDirty = true; updateSendHref(); });
+    els.subject.addEventListener('input', function () { state.subjectDirty = true; updateSendHref(); });
+
+    els.addNameBtn.addEventListener('click', function () {
+      if (names.length >= MAX_NAMES) return;
+      names.push(blankName());
+      renderNames();
+      var inputs = els.nameList.querySelectorAll('.name-input');
+      inputs[inputs.length - 1].focus();
+    });
+
+    els.resetBtn.addEventListener('click', function () {
+      state.bodyDirty = false;
+      state.subjectDirty = false;
+      regenerate();
+    });
+
+    els.sendBtn.addEventListener('click', function () {
+      updateSendHref();
+    });
+
+    els.copyBtn.addEventListener('click', function () {
+      var toLabel = els.to.options[els.to.selectedIndex] ? els.to.options[els.to.selectedIndex].text : els.to.value;
+      var text = '宛先：' + toLabel + '（' + els.to.value + '）\n件名：' + els.subject.value + '\n\n' + els.body.value;
+
+      function showStatus(ok) {
+        els.copyStatus.textContent = ok ? 'コピーしました。メールアプリに貼り付けてください。' : 'コピーできませんでした。';
+        setTimeout(function () { els.copyStatus.textContent = ''; }, 3500);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { showStatus(true); }, function () { showStatus(false); });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          var ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          showStatus(ok);
+        } catch (e) {
+          showStatus(false);
+        }
+      }
+    });
+  }
+
+  if (window.claude && window.claude.hot) {
+    window.claude.hot.snapshot(function () { return state; });
+    window.claude.hot.ready ? window.claude.hot.ready(function (data) {
+      if (data) state = Object.assign(state, data);
+      init();
+    }) : init();
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
