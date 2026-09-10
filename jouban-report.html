@@ -664,7 +664,7 @@
       subject: function (f) { return '【上番報告】' + f.site + ' ' + f.dateJp; },
       body: function (f) {
         return '本日' + f.dateJp + '、' + f.site + 'に定刻上番いたしました。\n' +
-          (f.prevOffDuty ? '前日下番時刻：' + f.prevOffDuty + '\n' : '') + '\n' +
+          (f.prevOffDuty ? '\n前日下番時刻：' + f.prevOffDuty + '\n' : '') + '\n' +
           '隊員：\n' + (f.names || '（未記入）');
       }
     },
@@ -678,7 +678,7 @@
       subject: function (f) { return '【特記事項】' + f.site + ' ' + f.dateJp; },
       body: function (f) {
         return f.dateJp + '、' + f.site + '上番時に下記の特記事項がございましたのでご報告いたします。\n' +
-          (f.prevOffDuty ? '前日下番時刻：' + f.prevOffDuty + '\n' : '') + '\n' +
+          (f.prevOffDuty ? '\n前日下番時刻：' + f.prevOffDuty + '\n' : '') + '\n' +
           '【特記事項】\n' + (f.remarks || '（未記入）') + '\n\n' +
           '隊員：\n' + (f.names || '（未記入）');
       }
