@@ -722,7 +722,7 @@
     var namesStr = nameEntries.map(function (e, i) {
       var line = (i + 1) + '. 【' + e.nm + '】';
       return e.extra ? line + '\n　　' + e.extra : line;
-    }).join('\n');
+    }).join('\n\n');
     return {
       site: els.site.value.trim() || '（現場名未記入）',
       names: namesStr,
