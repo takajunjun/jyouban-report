@@ -715,12 +715,12 @@
       var nm = (n.name || '').trim();
       if (!nm) return null;
       var extras = [];
-      if (n.tag) extras.push('区分：' + n.tag);
+      if (n.tag) extras.push('区分：【' + n.tag + '】');
       if (n.health) extras.push('体調：' + n.health);
       return { nm: nm, extra: extras.join('／') };
     }).filter(Boolean);
     var namesStr = nameEntries.map(function (e, i) {
-      var line = (i + 1) + '. ' + e.nm;
+      var line = (i + 1) + '. 【' + e.nm + '】';
       return e.extra ? line + '\n　　' + e.extra : line;
     }).join('\n');
     return {
