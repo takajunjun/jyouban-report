@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <title>上番報告</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -263,11 +263,11 @@
   }
 
   .field.two {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 12px;
   }
-  .field.two > div { display: grid; gap: 6px; }
+  .field.two > div { display: grid; gap: 6px; flex: 1 1 140px; min-width: 140px; }
 
   #siteInput {
     appearance: none;
@@ -283,6 +283,9 @@
 
   #remarksField { display: none; }
   #remarksField.show { display: grid; }
+
+  #prevOffDutyField { display: none; }
+  #prevOffDutyField.show { display: grid; }
 
   .name-list {
     display: grid;
@@ -346,6 +349,40 @@
 
   .name-row .name-tag { width: 52px; }
   .name-row .name-health { width: 100px; }
+
+  .name-subrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    margin: -2px 0 2px 18px;
+    padding: 5px 7px;
+    background: var(--surface-sunken);
+    border-radius: 7px;
+  }
+
+  .subrow-label {
+    flex: none;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .subrow-sep {
+    flex: none;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+  }
+
+  .name-subrow select {
+    flex: none;
+    width: 74px;
+    padding: 6px 3px;
+    font-size: 0.72rem;
+  }
+
+  .name-subrow .train-tag { width: 52px; }
 
   .name-remove {
     flex: none;
@@ -528,6 +565,10 @@
           <label for="whenInput">上番日</label>
           <input id="whenInput" type="date" />
         </div>
+        <div id="prevOffDutyField">
+          <label for="prevOffDutyInput">前日 下番時刻</label>
+          <select id="prevOffDutyInput"></select>
+        </div>
       </div>
       <div class="field">
         <div class="name-header" id="namesLabel">
@@ -622,7 +663,8 @@
       needsRemarks: false,
       subject: function (f) { return '【上番報告】' + f.site + ' ' + f.dateJp; },
       body: function (f) {
-        return '本日' + f.dateJp + '、' + f.site + 'に定刻上番いたしました。\n\n' +
+        return '本日' + f.dateJp + '、' + f.site + 'に定刻上番いたしました。\n' +
+          (f.prevOffDuty ? '前日下番時刻：' + f.prevOffDuty + '\n' : '') + '\n' +
           '隊員：\n' + (f.names || '（未記入）');
       }
     },
@@ -635,7 +677,8 @@
       needsRemarks: true,
       subject: function (f) { return '【特記事項】' + f.site + ' ' + f.dateJp; },
       body: function (f) {
-        return f.dateJp + '、' + f.site + '上番時に下記の特記事項がございましたのでご報告いたします。\n\n' +
+        return f.dateJp + '、' + f.site + '上番時に下記の特記事項がございましたのでご報告いたします。\n' +
+          (f.prevOffDuty ? '前日下番時刻：' + f.prevOffDuty + '\n' : '') + '\n' +
           '【特記事項】\n' + (f.remarks || '（未記入）') + '\n\n' +
           '隊員：\n' + (f.names || '（未記入）');
       }
@@ -646,6 +689,8 @@
     tplList: document.getElementById('tplList'),
     site: document.getElementById('siteInput'),
     when: document.getElementById('whenInput'),
+    prevOffDutyField: document.getElementById('prevOffDutyField'),
+    prevOffDuty: document.getElementById('prevOffDutyInput'),
     nameList: document.getElementById('nameList'),
     addNameBtn: document.getElementById('addNameBtn'),
     rosterAddSelect: document.getElementById('rosterAddSelect'),
@@ -667,19 +712,24 @@
   var state = { tplId: 'teiji', bodyDirty: false, subjectDirty: false };
   var names = [{ name: '', tag: '', health: DEFAULT_HEALTH }];
 
-  function blankName() { return { name: '', tag: '', health: DEFAULT_HEALTH }; }
+  function blankName() { return { name: '', tag: '', health: DEFAULT_HEALTH, trainStart: '', trainEnd: '', trainTag: '' }; }
 
   function toNameObjects(arr) {
     return (arr || []).map(function (v) {
-      if (v && typeof v === 'object') return { name: v.name || '', tag: v.tag || '', health: v.health || DEFAULT_HEALTH };
-      return { name: v || '', tag: '', health: DEFAULT_HEALTH };
+      if (v && typeof v === 'object') {
+        return {
+          name: v.name || '', tag: v.tag || '', health: v.health || DEFAULT_HEALTH,
+          trainStart: v.trainStart || '', trainEnd: v.trainEnd || '', trainTag: v.trainTag || ''
+        };
+      }
+      return { name: v || '', tag: '', health: DEFAULT_HEALTH, trainStart: '', trainEnd: '', trainTag: '' };
     });
   }
 
   function rosterToNames(site) {
     var roster = ROSTERS[site];
     if (!roster) return null;
-    return roster.map(function (n) { return { name: n, tag: '', health: DEFAULT_HEALTH }; });
+    return roster.map(function (n) { return { name: n, tag: '', health: DEFAULT_HEALTH, trainStart: '', trainEnd: '', trainTag: '' }; });
   }
 
   function loadStore() {
@@ -697,6 +747,23 @@
   }
 
   function pad(n) { return String(n).padStart(2, '0'); }
+
+  function buildTimeOptions(selectedVal, withBlank) {
+    var html = withBlank ? '<option value="">--:--</option>' : '';
+    for (var h = 0; h < 24; h++) {
+      for (var m = 0; m < 2; m++) {
+        var val = pad(h) + ':' + (m === 0 ? '00' : '30');
+        html += '<option value="' + val + '"' + (val === selectedVal ? ' selected' : '') + '>' + val + '</option>';
+      }
+    }
+    return html;
+  }
+
+  function buildTagOptions(selectedVal, placeholder) {
+    return '<option value="">' + (placeholder || '区分') + '</option>' + TAGS.map(function (tg) {
+      return '<option value="' + tg + '"' + (selectedVal === tg ? ' selected' : '') + '>' + tg + '</option>';
+    }).join('');
+  }
 
   function toDateInputValue(d) {
     return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
@@ -717,17 +784,28 @@
       var extras = [];
       if (n.tag) extras.push('区分：【' + n.tag + '】');
       if (n.health) extras.push('体調：' + n.health);
-      return { nm: nm, extra: extras.join('／') };
+      var trainLine = '';
+      if (n.tag === '研修' && (n.trainStart || n.trainEnd || n.trainTag)) {
+        var trainParts = [];
+        if (n.trainStart || n.trainEnd) trainParts.push((n.trainStart || '未定') + '〜' + (n.trainEnd || '未定'));
+        if (n.trainTag) trainParts.push('区分：【' + n.trainTag + '】');
+        trainLine = '研修時間：' + trainParts.join('　');
+      }
+      return { nm: nm, extra: extras.join('／'), trainLine: trainLine };
     }).filter(Boolean);
     var namesStr = nameEntries.map(function (e, i) {
       var line = (i + 1) + '. 【' + e.nm + '】';
-      return e.extra ? line + '\n　　' + e.extra : line;
+      if (e.extra) line += '\n　　' + e.extra;
+      if (e.trainLine) line += '\n　　' + e.trainLine;
+      return line;
     }).join('\n\n');
+    var siteVal = els.site.value.trim() || '（現場名未記入）';
     return {
-      site: els.site.value.trim() || '（現場名未記入）',
+      site: siteVal,
       names: namesStr,
       remarks: els.remarks.value.trim(),
-      dateJp: dateJp
+      dateJp: dateJp,
+      prevOffDuty: (siteVal === '石見空港') ? els.prevOffDuty.value : ''
     };
   }
 
@@ -757,19 +835,27 @@
       var removeBtn = names.length > 1
         ? '<button type="button" class="name-remove" data-i="' + i + '" aria-label="この氏名を削除"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>'
         : '';
-      var tagOptions = '<option value="">区分</option>' + TAGS.map(function (tg) {
-        return '<option value="' + tg + '"' + (row.tag === tg ? ' selected' : '') + '>' + tg + '</option>';
-      }).join('');
+      var tagOptions = buildTagOptions(row.tag);
       var healthOptions = '<option value="">体調</option>' + HEALTH.map(function (hl) {
         return '<option value="' + hl + '"' + (row.health === hl ? ' selected' : '') + '>' + hl + '</option>';
       }).join('');
-      return '<div class="name-row">' +
+      var mainRow = '<div class="name-row">' +
         '<span class="name-num">' + (i + 1) + '</span>' +
         '<input type="text" class="name-input" data-i="' + i + '" placeholder="例）山田 太郎" autocomplete="off" value="' + (row.name || '').replace(/"/g, '&quot;') + '" />' +
         '<select class="name-tag" data-i="' + i + '" aria-label="勤務形態">' + tagOptions + '</select>' +
         '<select class="name-health" data-i="' + i + '" aria-label="体調・飲酒">' + healthOptions + '</select>' +
         removeBtn +
         '</div>';
+      var subRow = (row.tag === '研修')
+        ? '<div class="name-subrow" data-i="' + i + '">' +
+          '<span class="subrow-label">研修時間</span>' +
+          '<select class="train-start" data-i="' + i + '" aria-label="上番時刻（研修）">' + buildTimeOptions(row.trainStart, true) + '</select>' +
+          '<span class="subrow-sep">〜</span>' +
+          '<select class="train-end" data-i="' + i + '" aria-label="下番時刻（研修）">' + buildTimeOptions(row.trainEnd, true) + '</select>' +
+          '<select class="train-tag" data-i="' + i + '" aria-label="勤務形態（研修）">' + buildTagOptions(row.trainTag) + '</select>' +
+          '</div>'
+        : '';
+      return mainRow + subRow;
     }).join('');
 
     Array.prototype.forEach.call(els.nameList.querySelectorAll('.name-input'), function (input) {
@@ -787,6 +873,34 @@
       sel.addEventListener('change', function () {
         var i = parseInt(sel.getAttribute('data-i'), 10);
         names[i].tag = sel.value;
+        renderNames();
+        regenerate();
+        saveStore({ names: names });
+      });
+    });
+
+    Array.prototype.forEach.call(els.nameList.querySelectorAll('.train-start'), function (sel) {
+      sel.addEventListener('change', function () {
+        var i = parseInt(sel.getAttribute('data-i'), 10);
+        names[i].trainStart = sel.value;
+        regenerate();
+        saveStore({ names: names });
+      });
+    });
+
+    Array.prototype.forEach.call(els.nameList.querySelectorAll('.train-end'), function (sel) {
+      sel.addEventListener('change', function () {
+        var i = parseInt(sel.getAttribute('data-i'), 10);
+        names[i].trainEnd = sel.value;
+        regenerate();
+        saveStore({ names: names });
+      });
+    });
+
+    Array.prototype.forEach.call(els.nameList.querySelectorAll('.train-tag'), function (sel) {
+      sel.addEventListener('change', function () {
+        var i = parseInt(sel.getAttribute('data-i'), 10);
+        names[i].trainTag = sel.value;
         regenerate();
         saveStore({ names: names });
       });
@@ -868,6 +982,10 @@
     els.clock.textContent = d.getFullYear() + '/' + pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
   }
 
+  function togglePrevOffDuty() {
+    els.prevOffDutyField.classList.toggle('show', els.site.value.trim() === '石見空港');
+  }
+
   function init() {
     var store = loadStore();
     els.site.value = store.site || '石見空港';
@@ -877,18 +995,22 @@
       ? toNameObjects(store.names).slice(0, MAX_NAMES)
       : (rosterToNames(els.site.value) || [blankName()]);
 
+    els.prevOffDuty.innerHTML = buildTimeOptions('18:30');
+
+    togglePrevOffDuty();
     renderTplList();
     renderNames();
     regenerate();
     tickClock();
     setInterval(tickClock, 30000);
 
-    [els.site, els.when, els.remarks].forEach(function (el) {
+    [els.site, els.when, els.remarks, els.prevOffDuty].forEach(function (el) {
       el.addEventListener('input', function () { regenerate(); });
     });
 
     els.site.addEventListener('change', function () {
       saveStore({ site: els.site.value });
+      togglePrevOffDuty();
       var roster = rosterToNames(els.site.value.trim());
       if (roster) {
         names = roster;
@@ -903,7 +1025,7 @@
     els.rosterAddSelect.addEventListener('change', function () {
       var val = els.rosterAddSelect.value;
       if (!val || names.length >= MAX_NAMES) return;
-      names.push({ name: val, tag: '', health: DEFAULT_HEALTH });
+      names.push({ name: val, tag: '', health: DEFAULT_HEALTH, trainStart: '', trainEnd: '', trainTag: '' });
       renderNames();
       regenerate();
       saveStore({ names: names });
