@@ -688,7 +688,7 @@
   }
 
   .send-btn {
-    flex: 1 1 160px;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -709,32 +709,6 @@
   .send-btn:active { filter: brightness(0.96); }
   .send-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
 
-  .copy-btn {
-    flex: 1 1 160px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: transparent;
-    color: var(--accent-deep);
-    border: 1.5px solid var(--accent);
-    border-radius: 999px;
-    padding: 12px 16px;
-    font-family: "Zen Kaku Gothic New", sans-serif;
-    font-weight: 700;
-    font-size: 0.92rem;
-    cursor: pointer;
-    transition: background .15s ease;
-  }
-  .copy-btn:hover { background: var(--accent-tint); }
-  .copy-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
-
-  #copyStatus {
-    flex-basis: 100%;
-    margin-top: 0;
-    color: var(--ok);
-    text-align: center;
-  }
 
   footer.note {
     max-width: 62ch;
@@ -887,17 +861,12 @@
         </select>
       </div>
       <div class="sendbar">
-        <button class="copy-btn" id="copyBtn" type="button">
-          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
-          本文をコピーする
-        </button>
         <a class="send-btn" id="sendBtn" href="mailto:">
           <svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
           メール送信画面へ
         </a>
-        <p class="hint" id="copyStatus" role="status"></p>
       </div>
-      <p class="hint">「メール送信画面へ」を押すと、お使いのメールアプリが開き、宛先・件名・本文が入力された状態になります。開かない場合は、パソコン・スマホ側で既定のメールアプリが設定されているかご確認ください。それでも開かない場合は「本文をコピーする」でコピーし、メールアプリに直接貼り付けてください。</p>
+      <p class="hint">「メール送信画面へ」を押すと、お使いのメールアプリが開き、宛先・件名・本文が入力された状態になります。開かない場合は、パソコン・スマホ側で既定のメールアプリが設定されているかご確認ください。</p>
     </section>
   </div>
 
@@ -972,8 +941,6 @@
     statusPill: document.getElementById('statusPill'),
     resetBtn: document.getElementById('resetBtn'),
     sendBtn: document.getElementById('sendBtn'),
-    copyBtn: document.getElementById('copyBtn'),
-    copyStatus: document.getElementById('copyStatus'),
     clock: document.getElementById('clock')
   };
 
@@ -1321,35 +1288,6 @@
 
     els.sendBtn.addEventListener('click', function () {
       updateSendHref();
-    });
-
-    els.copyBtn.addEventListener('click', function () {
-      var toLabel = els.to.options[els.to.selectedIndex] ? els.to.options[els.to.selectedIndex].text : els.to.value;
-      var text = '宛先：' + toLabel + '（' + els.to.value + '）\n件名：' + els.subject.value + '\n\n' + els.body.value;
-
-      function showStatus(ok) {
-        els.copyStatus.textContent = ok ? 'コピーしました。メールアプリに貼り付けてください。' : 'コピーできませんでした。';
-        setTimeout(function () { els.copyStatus.textContent = ''; }, 3500);
-      }
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { showStatus(true); }, function () { showStatus(false); });
-      } else {
-        try {
-          var ta = document.createElement('textarea');
-          ta.value = text;
-          ta.style.position = 'fixed';
-          ta.style.opacity = '0';
-          document.body.appendChild(ta);
-          ta.focus();
-          ta.select();
-          var ok = document.execCommand('copy');
-          document.body.removeChild(ta);
-          showStatus(ok);
-        } catch (e) {
-          showStatus(false);
-        }
-      }
     });
   }
 
