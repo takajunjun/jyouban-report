@@ -239,6 +239,74 @@
     font-weight: 500;
   }
 
+  .notice-form {
+    display: grid;
+    gap: 12px;
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .notice-form-row {
+    display: grid;
+    gap: 6px;
+  }
+
+  .notice-form-row label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+
+  .notice-form-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .notice-form-inline input,
+  .notice-form-inline select {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 11px;
+  }
+
+  #fluCostInput { flex: 1 1 100px; width: auto; max-width: 130px; }
+  #fluDateInput { flex: 1 1 150px; width: auto; min-width: 150px; }
+  #fluHourInput { flex: none; width: auto; }
+
+  .notice-form-inline .unit {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .notice-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #E2790E;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 13px 16px;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 700;
+    font-size: 0.98rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: filter .15s ease;
+  }
+  .notice-link-btn:hover { filter: brightness(1.06); }
+  .notice-link-btn:active { filter: brightness(0.96); }
+  .notice-link-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+
   .hero-waves {
     position: absolute;
     left: 0;
@@ -483,6 +551,9 @@
 
   #prevOffDutyField { display: none; }
   #prevOffDutyField.show { display: grid; }
+
+  #fluNameOtherField { display: none; }
+  #fluNameOtherField.show { display: grid; }
 
   .name-list {
     display: grid;
@@ -748,6 +819,40 @@
       <span class="notice-label">支店からのお知らせ</span>
     </div>
     <p class="notice-body">施設警備員の方を対象にインフルエンザの予防接種費用半額補助金が開始します、感染時の症状緩和も含めて接種ご検討ください。</p>
+
+    <div class="notice-form">
+      <div class="notice-form-row">
+        <label for="fluCostInput">予防接種料金</label>
+        <div class="notice-form-inline">
+          <input id="fluCostInput" type="number" inputmode="numeric" min="0" step="1" placeholder="例）1500" />
+          <span class="unit">円</span>
+        </div>
+      </div>
+      <div class="notice-form-row">
+        <label for="fluDateInput">支店へ領収書を持ってくる日</label>
+        <div class="notice-form-inline">
+          <input id="fluDateInput" type="date" />
+          <select id="fluHourInput" aria-label="時刻"></select>
+          <span class="unit">頃</span>
+        </div>
+      </div>
+      <div class="notice-form-row">
+        <label for="fluNameSelect">報告する方のお名前</label>
+        <div class="notice-form-inline">
+          <select id="fluNameSelect"></select>
+        </div>
+      </div>
+      <div class="notice-form-row" id="fluNameOtherField">
+        <label for="fluNameOtherInput">お名前（直接入力）</label>
+        <div class="notice-form-inline">
+          <input id="fluNameOtherInput" type="text" placeholder="例）山田 太郎" autocomplete="off" />
+        </div>
+      </div>
+      <a class="notice-link-btn" id="fluReportBtn" href="mailto:">
+        <svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+        接種した方はこちらへ報告
+      </a>
+    </div>
   </div>
 
   <div class="steps" role="list" aria-label="操作の流れ">
@@ -941,8 +1046,35 @@
     statusPill: document.getElementById('statusPill'),
     resetBtn: document.getElementById('resetBtn'),
     sendBtn: document.getElementById('sendBtn'),
+    fluCost: document.getElementById('fluCostInput'),
+    fluDate: document.getElementById('fluDateInput'),
+    fluHour: document.getElementById('fluHourInput'),
+    fluNameSelect: document.getElementById('fluNameSelect'),
+    fluNameOtherField: document.getElementById('fluNameOtherField'),
+    fluNameOther: document.getElementById('fluNameOtherInput'),
+    fluReportBtn: document.getElementById('fluReportBtn'),
     clock: document.getElementById('clock')
   };
+
+  var ALL_NAMES = (function () {
+    var seen = {};
+    var list = [];
+    Object.keys(ROSTERS).forEach(function (site) {
+      ROSTERS[site].forEach(function (n) {
+        if (!seen[n]) { seen[n] = true; list.push(n); }
+      });
+    });
+    return list;
+  })();
+
+  function buildFluNameOptions() {
+    var html = '<option value="">選択してください</option>';
+    ALL_NAMES.forEach(function (n) {
+      html += '<option value="' + n.replace(/"/g, '&quot;') + '">' + n + '</option>';
+    });
+    html += '<option value="__other__">名簿にない場合は直接入力</option>';
+    return html;
+  }
 
   var DEFAULT_HEALTH = '良好・飲酒無';
 
@@ -992,6 +1124,15 @@
         var val = pad(h) + ':' + (m === 0 ? '00' : '30');
         html += '<option value="' + val + '"' + (val === selectedVal ? ' selected' : '') + '>' + val + '</option>';
       }
+    }
+    return html;
+  }
+
+  function buildHourOptions(selectedVal) {
+    var html = '<option value="">選択</option>';
+    for (var h = 0; h < 24; h++) {
+      var val = String(h);
+      html += '<option value="' + val + '"' + (val === selectedVal ? ' selected' : '') + '>' + val + '時</option>';
     }
     return html;
   }
@@ -1214,6 +1355,31 @@
     els.sendBtn.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + subject + '&body=' + body;
   }
 
+  function toggleFluNameOther() {
+    els.fluNameOtherField.classList.toggle('show', els.fluNameSelect.value === '__other__');
+  }
+
+  function updateFluHref() {
+    var cost = els.fluCost.value.trim();
+    var costStr = cost ? cost + '円' : '（未記入）';
+    var dateJp = '';
+    if (els.fluDate.value) {
+      var d = parseDateOnly(els.fluDate.value);
+      dateJp = (d.getMonth() + 1) + '月' + d.getDate() + '日';
+    }
+    var hourVal = els.fluHour.value;
+    var whenStr = dateJp ? dateJp + (hourVal !== '' ? '　' + hourVal + '時頃' : '') : '（未記入）';
+    var nameVal = els.fluNameSelect.value;
+    var reporterName = (nameVal === '__other__') ? els.fluNameOther.value.trim() : nameVal;
+    var reporterStr = reporterName || '（未記入）';
+    var subject = '【予防接種費用報告】' + (dateJp || '');
+    var body = '予防接種料金　' + costStr + '\n' +
+      '支店へ領収書を持ってくる日　' + whenStr + '\n' +
+      '報告者　' + reporterStr;
+    els.fluReportBtn.href = 'mailto:' + encodeURIComponent('masuda2021kigyokeibi@gmail.com') +
+      '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+
   function tickClock() {
     var d = new Date();
     els.clock.textContent = d.getFullYear() + '/' + pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
@@ -1233,6 +1399,10 @@
       : (rosterToNames(els.site.value) || [blankName()]);
 
     els.prevOffDuty.innerHTML = buildTimeOptions('18:30');
+    els.fluHour.innerHTML = buildHourOptions('');
+    els.fluNameSelect.innerHTML = buildFluNameOptions();
+    toggleFluNameOther();
+    updateFluHref();
 
     togglePrevOffDuty();
     renderTplList();
@@ -1243,6 +1413,20 @@
 
     [els.site, els.when, els.remarks, els.prevOffDuty].forEach(function (el) {
       el.addEventListener('input', function () { regenerate(); });
+    });
+
+    [els.fluCost, els.fluDate, els.fluHour, els.fluNameOther].forEach(function (el) {
+      el.addEventListener('input', function () { updateFluHref(); });
+      el.addEventListener('change', function () { updateFluHref(); });
+    });
+
+    els.fluNameSelect.addEventListener('change', function () {
+      toggleFluNameOther();
+      updateFluHref();
+    });
+
+    els.fluReportBtn.addEventListener('click', function () {
+      updateFluHref();
     });
 
     els.site.addEventListener('change', function () {
