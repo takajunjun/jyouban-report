@@ -10,62 +10,68 @@
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #182B4A;
-    --ink-soft: #4B5A72;
-    --paper: #F5F3EE;
+    --ink: #16324F;
+    --ink-soft: #4C6E8C;
+    --paper: #EAF4FC;
     --surface: #FFFFFF;
-    --surface-sunken: #EEEBE2;
-    --accent: #E2790E;
-    --accent-deep: #9C5308;
-    --accent-tint: #FBE7CE;
-    --line: #DDD6C7;
-    --ok: #2F7D52;
-    --ok-tint: #E1F0E6;
-    --warn: #B23A2E;
-    --warn-tint: #F7E2DF;
-    --focus: #1D5FBF;
-    --shadow: 0 1px 2px rgba(24,43,74,0.06), 0 6px 20px -8px rgba(24,43,74,0.18);
-    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234B5A72' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    --surface-sunken: #EFF7FD;
+    --accent: #1C7ED6;
+    --accent-deep: #0F5A9E;
+    --accent-tint: #DCEEFB;
+    --line: #CCE4F5;
+    --ok: #1F8A5D;
+    --ok-tint: #DEF3E7;
+    --warn: #C24A3D;
+    --warn-tint: #FBE6E2;
+    --focus: #1C7ED6;
+    --hero-top: #4FB4E8;
+    --hero-bottom: #0C5FA0;
+    --shadow: 0 1px 2px rgba(16,60,100,0.07), 0 10px 26px -10px rgba(16,60,100,0.22);
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234C6E8C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ink: #E9EDF5;
-      --ink-soft: #A9B4C6;
-      --paper: #0F1622;
-      --surface: #17202E;
-      --surface-sunken: #10161F;
-      --accent: #F0923B;
-      --accent-deep: #FBC98C;
-      --accent-tint: #3A2A16;
-      --line: #2A3546;
+      --ink: #E4EFFB;
+      --ink-soft: #9DB8D2;
+      --paper: #0A1826;
+      --surface: #112238;
+      --surface-sunken: #0D1C2E;
+      --accent: #56A9EA;
+      --accent-deep: #9AD0F7;
+      --accent-tint: #123350;
+      --line: #1E3A55;
       --ok: #6FBF8E;
       --ok-tint: #163425;
       --warn: #E38077;
       --warn-tint: #3A1E1B;
       --focus: #6FA1F5;
+      --hero-top: #1C3E5C;
+      --hero-bottom: #061019;
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -10px rgba(0,0,0,0.55);
-      --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A9B4C6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239DB8D2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     }
   }
 
   :root[data-theme="dark"] {
-    --ink: #E9EDF5;
-    --ink-soft: #A9B4C6;
-    --paper: #0F1622;
-    --surface: #17202E;
-    --surface-sunken: #10161F;
-    --accent: #F0923B;
-    --accent-deep: #FBC98C;
-    --accent-tint: #3A2A16;
-    --line: #2A3546;
+    --ink: #E4EFFB;
+    --ink-soft: #9DB8D2;
+    --paper: #0A1826;
+    --surface: #112238;
+    --surface-sunken: #0D1C2E;
+    --accent: #56A9EA;
+    --accent-deep: #9AD0F7;
+    --accent-tint: #123350;
+    --line: #1E3A55;
     --ok: #6FBF8E;
     --ok-tint: #163425;
     --warn: #E38077;
     --warn-tint: #3A1E1B;
     --focus: #6FA1F5;
+    --hero-top: #1C3E5C;
+    --hero-bottom: #061019;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -10px rgba(0,0,0,0.55);
-    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A9B4C6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239DB8D2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   }
 
   * { box-sizing: border-box; }
@@ -84,50 +90,231 @@
     margin: 0 auto;
   }
 
-  header.top {
+  header.hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    padding: 22px 26px 46px;
+    background: linear-gradient(155deg, var(--hero-top) 0%, var(--hero-bottom) 100%);
+    box-shadow: var(--shadow);
+    color: #F4FAFF;
+  }
+
+  .hero-row {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    gap: 8px 20px;
-    padding-block: 4px 22px;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 24px;
+    gap: 8px 16px;
   }
 
   .brand {
     display: flex;
-    align-items: baseline;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
   }
 
-  .brand h1 {
-    font-family: "Zen Kaku Gothic New", sans-serif;
-    font-weight: 900;
-    font-size: 1.6rem;
-    letter-spacing: 0.02em;
-    margin: 0;
+  .brand .logo {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.35);
   }
+  .brand .logo svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 1.8; }
 
   .brand .co {
-    font-size: 0.78rem;
-    color: var(--ink-soft);
-    font-weight: 500;
+    font-size: 0.82rem;
+    color: #EAF5FF;
+    font-weight: 600;
+    letter-spacing: 0.02em;
   }
 
   .now-clock {
+    position: relative;
+    z-index: 2;
     font-family: "JetBrains Mono", monospace;
     font-variant-numeric: tabular-nums;
-    font-size: 0.82rem;
-    color: var(--ink-soft);
+    font-size: 0.8rem;
+    color: #EAF5FF;
     text-align: right;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+
+  .hero-title-row {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin: 18px 0 6px;
+  }
+
+  .hero h1 {
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 900;
+    font-size: 2.1rem;
+    letter-spacing: 0.02em;
+    margin: 0;
+    color: #fff;
+    text-shadow: 0 2px 14px rgba(4,20,36,0.25);
+  }
+
+  .safety-msg {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 8px rgba(4,20,36,0.25);
   }
 
   .lede {
+    position: relative;
+    z-index: 2;
+    color: #EAF5FF;
+    font-size: 0.98rem;
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  .notice-box {
+    display: grid;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 5px solid #E2790E;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 18px 2px 0;
+    box-shadow: var(--shadow);
+  }
+
+  .notice-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .notice-new {
+    flex: none;
+    background: #E2790E;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 4px 11px;
+    border-radius: 999px;
+    animation: blink-new 1.4s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .notice-new { animation: none; }
+  }
+  @keyframes blink-new {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  .notice-label {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--ink);
+  }
+
+  .notice-body {
+    margin: 0;
+    font-size: 1.1rem;
     color: var(--ink-soft);
-    font-size: 0.95rem;
-    margin: -14px 0 26px;
-    max-width: 62ch;
+    line-height: 1.75;
+    font-weight: 500;
+  }
+
+  .hero-waves {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.9;
+  }
+
+  .hero-glow {
+    position: absolute;
+    z-index: 1;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.16);
+    filter: blur(2px);
+  }
+  .hero-glow.a { width: 120px; height: 120px; top: -40px; left: -20px; }
+  .hero-glow.b { width: 70px; height: 70px; top: 10px; right: 18%; background: rgba(255,255,255,0.1); }
+
+  @media (max-width: 560px) {
+    .hero { padding: 18px 18px 40px; }
+    .hero h1 { font-size: 1.7rem; }
+  }
+
+  .steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin: 18px 2px 22px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    flex: none;
+  }
+
+  .step .circle {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .step .step-label {
+    white-space: nowrap;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 6px;
+  }
+
+  .step-line {
+    flex: none;
+    width: 30px;
+    height: 2px;
+    background: var(--accent-tint);
+    margin: 0 2px;
+    align-self: center;
+  }
+
+  @media (max-width: 560px) {
+    .step .step-label { font-size: 0.76rem; }
+    .step-line { width: 18px; }
   }
 
   .grid {
@@ -144,34 +331,43 @@
   section.card {
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 20px;
     box-shadow: var(--shadow);
   }
 
-  .step-eyebrow {
+  .card-head {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent-deep);
-    margin: 0 0 14px;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 16px;
   }
 
-  .step-eyebrow .num {
-    display: inline-grid;
+  .card-head + .card-head { margin-top: 22px; }
+
+  .card-head .ch-icon {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    display: grid;
     place-items: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    font-size: 0.7rem;
+    background: var(--accent-tint);
+    color: var(--accent-deep);
+  }
+  .card-head .ch-icon svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+  .card-head .ch-title {
+    font-size: 1rem;
     font-weight: 700;
-    letter-spacing: 0;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .card-head .ch-desc {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin: 2px 0 0;
   }
 
   .tpl-list {
@@ -481,17 +677,18 @@
     bottom: 12px;
     margin-top: 6px;
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     align-items: center;
     background: var(--surface);
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 10px;
   }
 
   .send-btn {
-    flex: 1;
+    flex: 1 1 160px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -499,7 +696,7 @@
     background: var(--accent);
     color: #fff;
     border: none;
-    border-radius: 9px;
+    border-radius: 999px;
     padding: 13px 16px;
     font-family: "Zen Kaku Gothic New", sans-serif;
     font-weight: 700;
@@ -512,14 +709,32 @@
   .send-btn:active { filter: brightness(0.96); }
   .send-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
 
-  .fallback-row {
+  .copy-btn {
+    flex: 1 1 160px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 8px;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--accent-deep);
+    border: 1.5px solid var(--accent);
+    border-radius: 999px;
+    padding: 12px 16px;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: background .15s ease;
   }
+  .copy-btn:hover { background: var(--accent-tint); }
+  .copy-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-  .fallback-row .hint { margin-top: 0; color: var(--ok); }
+  #copyStatus {
+    flex-basis: 100%;
+    margin-top: 0;
+    color: var(--ok);
+    text-align: center;
+  }
 
   footer.note {
     max-width: 62ch;
@@ -532,22 +747,63 @@
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
-    <div class="brand">
-      <h1>上番報告</h1>
-      <span class="co">企業警備保障株式会社</span>
+  <header class="hero">
+    <div class="hero-glow a" aria-hidden="true"></div>
+    <div class="hero-glow b" aria-hidden="true"></div>
+    <div class="hero-row">
+      <div class="brand">
+        <span class="logo"><svg viewBox="0 0 24 24"><path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <span class="co">企業警備保障株式会社</span>
+      </div>
+      <div class="now-clock" id="clock"></div>
     </div>
-    <div class="now-clock" id="clock"></div>
+    <div class="hero-title-row">
+      <h1>上番報告</h1>
+      <span class="safety-msg">今日も一日ご安全に</span>
+    </div>
+    <p class="lede">現場到着時に、その場でテンプレートを選んで報告文を作成し、メールで送信します。</p>
+    <svg class="hero-waves" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,40 C150,80 350,0 600,35 C850,70 1050,10 1200,45 L1200,90 L0,90 Z" fill="rgba(255,255,255,0.16)"/>
+      <path d="M0,55 C200,90 400,25 650,55 C900,85 1050,35 1200,60 L1200,90 L0,90 Z" fill="rgba(255,255,255,0.28)"/>
+    </svg>
   </header>
 
-  <p class="lede">現場到着時に、その場でテンプレートを選んで報告文を作成し、メールで送信します。</p>
+  <div class="notice-box" role="note" aria-label="支店からのお知らせ">
+    <div class="notice-head">
+      <span class="notice-new">NEW</span>
+      <span class="notice-label">支店からのお知らせ</span>
+    </div>
+    <p class="notice-body">施設警備員の方を対象にインフルエンザの予防接種費用半額補助金が開始します、感染時の症状緩和も含めて接種ご検討ください。</p>
+  </div>
+
+  <div class="steps" role="list" aria-label="操作の流れ">
+    <div class="step" role="listitem"><span class="circle">1</span><span class="step-label">報告の種類を選ぶ</span></div>
+    <span class="step-line" aria-hidden="true"></span>
+    <div class="step" role="listitem"><span class="circle">2</span><span class="step-label">内容を入力する</span></div>
+    <span class="step-line" aria-hidden="true"></span>
+    <div class="step" role="listitem"><span class="circle">3</span><span class="step-label">報告文を確認・修正する</span></div>
+    <span class="step-line" aria-hidden="true"></span>
+    <div class="step" role="listitem"><span class="circle">4</span><span class="step-label">送信する</span></div>
+  </div>
 
   <div class="grid">
     <section class="card" aria-labelledby="tpl-heading">
-      <p class="step-eyebrow"><span class="num">1</span>報告の種類を選ぶ</p>
+      <div class="card-head">
+        <span class="ch-icon"><svg viewBox="0 0 24 24"><path d="M9 4h6a1 1 0 0 1 1 1v1h1a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1V5a1 1 0 0 1 1-1z"/><path d="M9 12h6M9 16h6"/></svg></span>
+        <div>
+          <p class="ch-title">1. 報告の種類を選択</p>
+          <p class="ch-desc">報告の種類を選択してください。</p>
+        </div>
+      </div>
       <div class="tpl-list" id="tplList" role="group" aria-label="報告テンプレート"></div>
 
-      <p class="step-eyebrow"><span class="num">2</span>内容を入力する</p>
+      <div class="card-head">
+        <span class="ch-icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.6 7-12a7 7 0 1 0-14 0c0 5.4 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg></span>
+        <div>
+          <p class="ch-title">2. 現場・隊員情報</p>
+          <p class="ch-desc">現場情報と隊員情報を入力してください。</p>
+        </div>
+      </div>
       <div class="field two">
         <div>
           <label for="siteInput">現場名</label>
@@ -596,7 +852,13 @@
     </section>
 
     <section class="card" aria-labelledby="preview-heading">
-      <p class="step-eyebrow"><span class="num">3</span>報告文を確認・修正する</p>
+      <div class="card-head">
+        <span class="ch-icon"><svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11a2 2 0 0 0-3-3L5 16l-1 4z"/></svg></span>
+        <div>
+          <p class="ch-title">3. 報告内容の確認・修正</p>
+          <p class="ch-desc">件名・本文を確認し、必要に応じて修正してください。</p>
+        </div>
+      </div>
       <div class="preview-tools">
         <span class="status-pill ok" id="statusPill">異常なし報告</span>
         <button class="link-btn" id="resetBtn" type="button">テンプレートを再適用</button>
@@ -610,7 +872,13 @@
         <textarea id="reportBody"></textarea>
       </div>
 
-      <p class="step-eyebrow" style="margin-top:18px;"><span class="num">4</span>送信する</p>
+      <div class="card-head" style="margin-top:22px;">
+        <span class="ch-icon"><svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span>
+        <div>
+          <p class="ch-title">4. 送信する</p>
+          <p class="ch-desc">宛先を選択し、メールを送信してください。</p>
+        </div>
+      </div>
       <div class="field">
         <label for="toInput">宛先</label>
         <select id="toInput">
@@ -619,14 +887,15 @@
         </select>
       </div>
       <div class="sendbar">
+        <button class="copy-btn" id="copyBtn" type="button">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          本文をコピーする
+        </button>
         <a class="send-btn" id="sendBtn" href="mailto:">
           <svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
           メール送信画面へ
         </a>
-      </div>
-      <div class="fallback-row">
-        <button class="link-btn" id="copyBtn" type="button">本文をコピーする</button>
-        <span class="hint" id="copyStatus" role="status"></span>
+        <p class="hint" id="copyStatus" role="status"></p>
       </div>
       <p class="hint">「メール送信画面へ」を押すと、お使いのメールアプリが開き、宛先・件名・本文が入力された状態になります。開かない場合は、パソコン・スマホ側で既定のメールアプリが設定されているかご確認ください。それでも開かない場合は「本文をコピーする」でコピーし、メールアプリに直接貼り付けてください。</p>
     </section>
