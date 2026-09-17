@@ -218,7 +218,7 @@
     animation: blink-new 1.4s ease-in-out infinite;
   }
   @media (prefers-reduced-motion: reduce) {
-    .notice-new { animation: none; }
+    .notice-new, .notice-alert { animation: none; }
   }
   @keyframes blink-new {
     0%, 100% { opacity: 1; }
@@ -237,6 +237,15 @@
     color: var(--ink-soft);
     line-height: 1.75;
     font-weight: 500;
+  }
+
+  .notice-alert {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--warn);
+    line-height: 1.6;
+    animation: blink-new 1.4s ease-in-out infinite;
   }
 
   .notice-form {
@@ -819,6 +828,7 @@
       <span class="notice-label">支店からのお知らせ</span>
     </div>
     <p class="notice-body">施設警備員の方を対象にインフルエンザの予防接種費用半額補助金が開始します、感染時の症状緩和も含めて接種ご検討ください。</p>
+    <p class="notice-alert">領収書は接種した当月中に提出して下さい。</p>
 
     <div class="notice-form">
       <div class="notice-form-row">
