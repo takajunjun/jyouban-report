@@ -248,6 +248,24 @@
     animation: blink-new 1.4s ease-in-out infinite;
   }
 
+  .notice-item {
+    display: grid;
+    gap: 10px;
+  }
+
+  .notice-item + .notice-item {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .notice-item-title {
+    margin: 0;
+    font-weight: 800;
+    font-size: 1.08rem;
+    color: var(--ink);
+  }
+
   .notice-form {
     display: grid;
     gap: 12px;
@@ -827,40 +845,53 @@
       <span class="notice-new">NEW</span>
       <span class="notice-label">支店からのお知らせ</span>
     </div>
-    <p class="notice-body">施設警備員の方を対象にインフルエンザの予防接種費用半額補助金が開始します、感染時の症状緩和も含めて接種ご検討ください。</p>
-    <p class="notice-alert">領収書は接種した当月中に提出して下さい。</p>
 
-    <div class="notice-form">
-      <div class="notice-form-row">
-        <label for="fluCostInput">予防接種料金</label>
-        <div class="notice-form-inline">
-          <input id="fluCostInput" type="number" inputmode="numeric" min="0" step="1" placeholder="例）1500" />
-          <span class="unit">円</span>
+    <div class="notice-item">
+      <p class="notice-item-title">インフルエンザ予防接種費用の補助について</p>
+      <p class="notice-body">施設警備員の方を対象にインフルエンザの予防接種費用半額補助金が開始します、感染時の症状緩和も含めて接種ご検討ください。</p>
+      <p class="notice-alert">領収書は接種した当月中に提出して下さい。</p>
+
+      <div class="notice-form">
+        <div class="notice-form-row">
+          <label for="fluCostInput">予防接種料金</label>
+          <div class="notice-form-inline">
+            <input id="fluCostInput" type="number" inputmode="numeric" min="0" step="1" placeholder="例）1500" />
+            <span class="unit">円</span>
+          </div>
         </div>
-      </div>
-      <div class="notice-form-row">
-        <label for="fluDateInput">支店へ領収書を持ってくる日</label>
-        <div class="notice-form-inline">
-          <input id="fluDateInput" type="date" />
-          <select id="fluHourInput" aria-label="時刻"></select>
-          <span class="unit">頃</span>
+        <div class="notice-form-row">
+          <label for="fluDateInput">支店へ領収書を持ってくる日</label>
+          <div class="notice-form-inline">
+            <input id="fluDateInput" type="date" />
+            <select id="fluHourInput" aria-label="時刻"></select>
+            <span class="unit">頃</span>
+          </div>
         </div>
-      </div>
-      <div class="notice-form-row">
-        <label for="fluNameSelect">報告する方のお名前</label>
-        <div class="notice-form-inline">
-          <select id="fluNameSelect"></select>
+        <div class="notice-form-row">
+          <label for="fluNameSelect">報告する方のお名前</label>
+          <div class="notice-form-inline">
+            <select id="fluNameSelect"></select>
+          </div>
         </div>
-      </div>
-      <div class="notice-form-row" id="fluNameOtherField">
-        <label for="fluNameOtherInput">お名前（直接入力）</label>
-        <div class="notice-form-inline">
-          <input id="fluNameOtherInput" type="text" placeholder="例）山田 太郎" autocomplete="off" />
+        <div class="notice-form-row" id="fluNameOtherField">
+          <label for="fluNameOtherInput">お名前（直接入力）</label>
+          <div class="notice-form-inline">
+            <input id="fluNameOtherInput" type="text" placeholder="例）山田 太郎" autocomplete="off" />
+          </div>
         </div>
+        <a class="notice-link-btn" id="fluReportBtn" href="mailto:">
+          <svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+          接種した方はこちらへ報告
+        </a>
       </div>
-      <a class="notice-link-btn" id="fluReportBtn" href="mailto:">
-        <svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
-        接種した方はこちらへ報告
+    </div>
+
+    <div class="notice-item">
+      <p class="notice-item-title">カスハラ相談のご案内</p>
+      <p class="notice-body">お客様・施設利用者・通行人などからの行き過ぎた言動でお困りの際は、ひとりで抱えず支店にご相談ください。判断の目安や該当する例、その場での動き方をまとめた案内です。</p>
+      <a class="notice-link-btn" href="https://claude.ai/artifact/FAH687VtwyuZrMjktxVsfo" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M14 3h7v7M10 14L21 3M21 14v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h6"/></svg>
+        案内を見る
       </a>
     </div>
   </div>
