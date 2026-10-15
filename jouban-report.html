@@ -189,13 +189,13 @@
 
   .notice-box {
     display: grid;
-    gap: 10px;
+    gap: 6px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-left: 5px solid #E2790E;
     border-radius: 12px;
-    padding: 16px 18px;
-    margin: 18px 2px 0;
+    padding: 12px 16px 14px;
+    margin: 14px 2px 0;
     box-shadow: var(--shadow);
   }
 
@@ -235,7 +235,7 @@
     margin: 0;
     font-size: 1.1rem;
     color: var(--ink-soft);
-    line-height: 1.75;
+    line-height: 1.6;
     font-weight: 500;
   }
 
@@ -244,10 +244,10 @@
     font-size: 1.25rem;
     font-weight: 800;
     color: var(--ink);
-    line-height: 1.6;
+    line-height: 1.5;
     background: var(--accent-tint);
     border-radius: 8px;
-    padding: 8px 12px;
+    padding: 5px 12px;
   }
 
   .notice-alert {
@@ -255,18 +255,18 @@
     font-size: 1.25rem;
     font-weight: 800;
     color: var(--warn);
-    line-height: 1.6;
+    line-height: 1.5;
     animation: blink-new 1.4s ease-in-out infinite;
   }
 
   .notice-item {
     display: grid;
-    gap: 10px;
+    gap: 6px;
   }
 
   .notice-item + .notice-item {
-    margin-top: 16px;
-    padding-top: 16px;
+    margin-top: 8px;
+    padding-top: 10px;
     border-top: 1px dashed var(--line);
   }
 
@@ -277,17 +277,42 @@
     color: var(--ink);
   }
 
+  .notice-fold { margin-top: 2px; }
+  .notice-fold > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px solid #E2790E;
+    color: #B85A00;
+    background: transparent;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 700;
+    font-size: 1.02rem;
+  }
+  .notice-fold > summary::-webkit-details-marker { display: none; }
+  .notice-fold > summary::after { content: "▼"; font-size: 0.75em; transition: transform .15s ease; }
+  .notice-fold[open] > summary::after { transform: rotate(180deg); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .notice-fold > summary { color: #F2A24E; }
+  }
+  :root[data-theme="dark"] .notice-fold > summary { color: #F2A24E; }
+
   .notice-form {
     display: grid;
-    gap: 12px;
-    margin-top: 4px;
-    padding-top: 14px;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
     border-top: 1px dashed var(--line);
   }
 
   .notice-form-row {
     display: grid;
-    gap: 6px;
+    gap: 4px;
   }
 
   .notice-form-row label {
@@ -311,7 +336,7 @@
     background: var(--surface-sunken);
     border: 1px solid var(--line);
     border-radius: 8px;
-    padding: 9px 11px;
+    padding: 7px 10px;
   }
 
   #fluCostInput { flex: 1 1 100px; width: auto; max-width: 130px; }
@@ -333,7 +358,7 @@
     color: #fff;
     border: none;
     border-radius: 999px;
-    padding: 13px 16px;
+    padding: 10px 16px;
     font-family: "Zen Kaku Gothic New", sans-serif;
     font-weight: 700;
     font-size: 0.98rem;
@@ -862,11 +887,18 @@
     </div>
 
     <div class="notice-item">
+      <p class="notice-item-title">ストレスチェックの実施をお願いします</p>
+      <p class="notice-body">メールにてストレスチェック実施のリンクが送信されています。まずは実施するかどうかの選択をしていただき、その後スマホ等で実施をお願いします。実施しない、もしくは用紙での回答を希望の方は、連絡のうえ支店にお越しください。よろしくお願いします。</p>
+    </div>
+
+    <div class="notice-item">
       <p class="notice-item-title">インフルエンザ予防接種費用の補助について</p>
       <p class="notice-body">施設警備員の方を対象にインフルエンザの予防接種費用半額補助金が開始します、感染時の症状緩和も含めて接種ご検討ください。</p>
       <p class="notice-deadline">接種期限：2027年1月31日まで</p>
       <p class="notice-alert">領収書は接種した当月中に提出して下さい。</p>
 
+      <details class="notice-fold">
+      <summary>接種した方はこちらへ報告</summary>
       <div class="notice-form">
         <div class="notice-form-row">
           <label for="fluCostInput">予防接種料金</label>
@@ -897,9 +929,10 @@
         </div>
         <a class="notice-link-btn" id="fluReportBtn" href="mailto:">
           <svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
-          接種した方はこちらへ報告
+          この内容でメール送信画面へ
         </a>
       </div>
+      </details>
     </div>
 
     <div class="notice-item">
