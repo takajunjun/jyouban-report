@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #16324F;
@@ -188,6 +188,7 @@
   }
 
   .notice-box {
+    font-family: "BIZ UDPGothic", "Noto Sans JP", sans-serif;
     display: grid;
     gap: 6px;
     background: var(--surface);
@@ -200,6 +201,7 @@
   }
 
   .notice-head {
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -226,23 +228,23 @@
   }
 
   .notice-label {
-    font-weight: 800;
-    font-size: 1.2rem;
+    font-weight: 700;
+    font-size: 1.45rem;
     color: var(--ink);
   }
 
   .notice-body {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     color: var(--ink-soft);
-    line-height: 1.6;
-    font-weight: 500;
+    line-height: 1.65;
+    font-weight: 400;
   }
 
   .notice-deadline {
     margin: 0;
-    font-size: 1.25rem;
-    font-weight: 800;
+    font-size: 1.3rem;
+    font-weight: 700;
     color: var(--ink);
     line-height: 1.5;
     background: var(--accent-tint);
@@ -252,7 +254,7 @@
 
   .notice-note {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--warn);
     line-height: 1.5;
@@ -260,8 +262,8 @@
 
   .notice-alert {
     margin: 0;
-    font-size: 1.25rem;
-    font-weight: 800;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--warn);
     line-height: 1.5;
     animation: blink-new 1.4s ease-in-out infinite;
@@ -278,10 +280,18 @@
     border-top: 1px dashed var(--line);
   }
 
+  .notice-item-title .notice-new {
+    display: inline-block;
+    font-size: 0.85rem;
+    padding: 2px 10px;
+    margin-right: 8px;
+    vertical-align: 2px;
+  }
+
   .notice-item-title {
     margin: 0;
-    font-weight: 800;
-    font-size: 1.08rem;
+    font-weight: 700;
+    font-size: 1.3rem;
     color: var(--ink);
   }
 
@@ -298,9 +308,9 @@
     background: transparent;
     border-radius: 999px;
     padding: 9px 16px;
-    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-family: "BIZ UDPGothic", "Zen Kaku Gothic New", sans-serif;
     font-weight: 700;
-    font-size: 1.02rem;
+    font-size: 1.15rem;
   }
   .notice-fold > summary::-webkit-details-marker { display: none; }
   .notice-fold > summary::after { content: "▼"; font-size: 0.75em; transition: transform .15s ease; }
@@ -324,7 +334,7 @@
   }
 
   .notice-form-row label {
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: var(--ink-soft);
   }
@@ -366,10 +376,10 @@
     color: #fff;
     border: none;
     border-radius: 999px;
-    padding: 10px 16px;
-    font-family: "Zen Kaku Gothic New", sans-serif;
+    padding: 11px 16px;
+    font-family: "BIZ UDPGothic", "Zen Kaku Gothic New", sans-serif;
     font-weight: 700;
-    font-size: 0.98rem;
+    font-size: 1.04rem;
     cursor: pointer;
     text-decoration: none;
     transition: filter .15s ease;
@@ -890,18 +900,17 @@
 
   <div class="notice-box" role="note" aria-label="支店からのお知らせ">
     <div class="notice-head">
-      <span class="notice-new">NEW</span>
       <span class="notice-label">支店からのお知らせ</span>
     </div>
 
     <div class="notice-item">
-      <p class="notice-item-title">ストレスチェックの実施をお願いします</p>
+      <p class="notice-item-title"><span class="notice-new">NEW</span>ストレスチェックの実施をお願いします</p>
       <p class="notice-body">メールにてストレスチェック実施のリンクが送信されています。まずは実施するかどうかの選択をしていただき、その後スマホ等で実施をお願いします。実施しない、もしくは用紙での回答を希望の方は、連絡のうえ支店にお越しください。よろしくお願いします。</p>
       <p class="notice-deadline">期限：10月31日まで</p>
     </div>
 
     <div class="notice-item">
-      <p class="notice-item-title">年末調整の用紙提出のお願い</p>
+      <p class="notice-item-title"><span class="notice-new">NEW</span>年末調整の用紙提出のお願い</p>
       <p class="notice-body">来週を目途に専用の用紙を皆様へ配布しますので、ご記入と必要書類を添付いただき、支店に提出をお願いします。</p>
       <p class="notice-deadline">期限：11月20日まで</p>
       <p class="notice-note">注意点：令和8年度中途入社の方は前職の源泉徴収票が必要となります。</p>
