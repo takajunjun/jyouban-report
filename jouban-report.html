@@ -979,16 +979,65 @@
   /* 氏名行：1行目に氏名（広く）、2行目に区分・体調・削除 */
   .name-list { gap: 14px; }
   .name-header { display: none; }
-  .name-row { gap: 8px 8px; align-items: center; }
-  .name-num { width: 22px; font-size: 1rem; }
-  .name-row input { flex: 1 1 calc(100% - 32px); max-width: none; font-size: 1.3rem; padding: 12px 12px; }
-  .name-row select { font-size: 1.1rem; padding: 10px 6px; }
-  .name-row .name-tag { width: 100px; font-size: 1.05rem; margin-left: 30px; }
-  .name-row .name-health { width: auto; flex: 1 1 100px; min-width: 0; font-size: 1.05rem; padding-left: 4px; padding-right: 2px; }
-  .name-remove { width: 44px; height: 46px; border-radius: 10px; }
-  .name-remove svg { width: 16px; height: 16px; }
+  /* 氏名行：名前・区分・体調・削除 を常に1行に。各欄の幅と文字は画面幅に比例して拡大・縮小 */
+  .name-list { container-type: inline-size; }
+  .name-row {
+    display: grid;
+    grid-template-columns: 4.2cqw minmax(0, 1.75fr) minmax(0, 0.72fr) minmax(0, 1.42fr) 10.5cqw;
+    gap: 1.3cqw;
+    align-items: center;
+  }
+  .name-num { grid-column: 1; width: auto; font-size: 3.4cqw; text-align: left; }
+  .name-row input, .name-row select { box-sizing: border-box; }
+  .name-row input {
+    grid-column: 2;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    font-size: min(1.3rem, 5.6cqw);
+    padding: 2.8cqw 1.6cqw;
+  }
+  .name-row select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: var(--chevron);
+    background-repeat: no-repeat;
+    background-position: right 2px center;
+    background-size: 3.2cqw;
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+    padding: 2.8cqw 3.4cqw 2.8cqw 1.2cqw;
+    text-overflow: clip;
+  }
+  .name-row .name-tag { grid-column: 3; width: 100%; font-size: min(1.15rem, 4.7cqw); }
+  .name-row .name-health { grid-column: 4; width: 100%; font-size: min(1rem, 4.1cqw); }
+  .name-remove {
+    grid-column: 5;
+    width: 100%;
+    height: 100%;
+    min-height: 42px;
+    border-radius: 8px;
+    border-color: var(--warn);
+    color: var(--warn);
+    background: var(--warn-tint);
+  }
+  .name-remove svg { width: 5cqw; height: 5cqw; stroke-width: 2.6; }
+  @media (max-width: 420px) { section.card { padding-left: 10px; padding-right: 10px; } }
 
-  .name-subrow { gap: 8px; margin: -4px 0 2px 30px; padding: 8px 10px; }
+  /* 画面幅に余裕があるときは、名前バーを最長の名前に合わせた幅にして右側にまとめる */
+  @container (min-width: 600px) {
+    .name-row { grid-template-columns: 22px calc(11em + 26px) 74px 132px 48px; justify-content: start; gap: 8px; }
+    .name-num { font-size: 1rem; }
+    .name-row input { font-size: 1.3rem; padding: 12px 12px; }
+    .name-row select { padding: 10px 16px 10px 8px; background-position: right 5px center; background-size: 12px; }
+    .name-row .name-tag { font-size: 1.05rem; }
+    .name-row .name-health { font-size: 0.95rem; padding-left: 6px; }
+    .name-remove { width: 48px; height: 44px; }
+    .name-remove svg { width: 20px; height: 20px; }
+  }
+
+  .name-subrow { gap: 8px; margin: 2px 0 6px 20px; padding: 8px 10px; }
   .subrow-label { font-size: 1.05rem; }
   .subrow-sep { font-size: 1.05rem; }
   .name-subrow select { width: 96px; font-size: 1.1rem; padding: 10px 6px; }
@@ -1475,6 +1524,28 @@
     });
   }
 
+
+  var _fitCtx = null;
+  function fitNameFont(input) {
+    if (!input || !input.clientWidth) return;
+    input.style.fontSize = '';
+    var cs = window.getComputedStyle(input);
+    var base = parseFloat(cs.fontSize);
+    var avail = input.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2;
+    var text = input.value || '';
+    if (!text || avail <= 0) return;
+    if (!_fitCtx) _fitCtx = document.createElement('canvas').getContext('2d');
+    _fitCtx.font = cs.fontWeight + ' ' + base + 'px ' + cs.fontFamily;
+    var w = _fitCtx.measureText(text).width;
+    if (w > avail) {
+      var fs = Math.max(9, Math.floor(base * avail / w * 10) / 10);
+      input.style.fontSize = fs + 'px';
+    }
+  }
+  function fitAllNameFonts() {
+    Array.prototype.forEach.call(els.nameList.querySelectorAll('.name-input'), fitNameFont);
+  }
+
   function renderNames() {
     els.nameList.innerHTML = names.map(function (row, i) {
       var removeBtn = names.length > 1
@@ -1507,6 +1578,7 @@
       input.addEventListener('input', function () {
         var i = parseInt(input.getAttribute('data-i'), 10);
         names[i].name = input.value;
+        fitNameFont(input);
         regenerate();
       });
       input.addEventListener('change', function () {
@@ -1573,6 +1645,8 @@
 
     els.addNameBtn.disabled = names.length >= MAX_NAMES;
     updateRosterAddOptions();
+    fitAllNameFonts();
+    if (window.requestAnimationFrame) window.requestAnimationFrame(fitAllNameFonts);
   }
 
   function updateRosterAddOptions() {
@@ -1657,6 +1731,8 @@
   }
 
   function init() {
+    window.addEventListener('resize', fitAllNameFonts);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAllNameFonts);
     var store = loadStore();
     els.site.value = store.site || '石見空港';
     els.to.value = store.to || 'masuda2021kigyokeibi@gmail.com';
