@@ -948,6 +948,61 @@
     color: var(--ink-soft);
     line-height: 1.7;
   }
+
+  /* ===== 入力・報告作成エリアの文字サイズ拡大（お知らせ欄に合わせる） ===== */
+  section.card { padding: 18px 14px; }
+  .card-head { gap: 12px; margin-bottom: 18px; }
+  .card-head .ch-icon { width: 42px; height: 42px; border-radius: 12px; }
+  .card-head .ch-icon svg { width: 22px; height: 22px; }
+  .card-head .ch-title { font-size: 1.35rem; font-weight: 700; line-height: 1.35; }
+  .card-head .ch-desc { font-size: 1rem; margin-top: 3px; line-height: 1.5; }
+
+  .tpl-btn { padding: 14px 14px; gap: 12px; }
+  .tpl-btn .ic { width: 38px; height: 38px; border-radius: 10px; }
+  .tpl-btn .ic svg { width: 20px; height: 20px; }
+  .tpl-btn .tpl-name { font-size: 1.25rem; }
+  .tpl-btn .tpl-desc { font-size: 1rem; margin-top: 3px; line-height: 1.5; }
+
+  .field { gap: 8px; margin-bottom: 18px; }
+  .field.two { align-items: start; }
+  .field.two > div { min-width: 0; }
+  @media (max-width: 480px) { .field.two > div { flex: 1 1 100%; } }
+  input[type="date"] { min-width: 0; max-width: 100%; }
+  .field label { font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+  .field input, .field textarea, .field select { font-size: 1.2rem; padding: 12px 12px; border-radius: 10px; }
+  #siteInput { padding-right: 40px; background-size: 18px; }
+  #reportBody { font-size: 1.15rem; line-height: 1.7; min-height: 260px; }
+  .hint { font-size: 0.95rem; line-height: 1.6; margin-top: 6px; }
+  .link-btn { font-size: 1rem; }
+  .status-pill { font-size: 0.95rem; padding: 4px 12px; }
+
+  /* 氏名行：1行目に氏名（広く）、2行目に区分・体調・削除 */
+  .name-list { gap: 14px; }
+  .name-header { display: none; }
+  .name-row { gap: 8px 8px; align-items: center; }
+  .name-num { width: 22px; font-size: 1rem; }
+  .name-row input { flex: 1 1 calc(100% - 32px); max-width: none; font-size: 1.3rem; padding: 12px 12px; }
+  .name-row select { font-size: 1.1rem; padding: 10px 6px; }
+  .name-row .name-tag { width: 100px; font-size: 1.05rem; margin-left: 30px; }
+  .name-row .name-health { width: auto; flex: 1 1 100px; min-width: 0; font-size: 1.05rem; padding-left: 4px; padding-right: 2px; }
+  .name-remove { width: 44px; height: 46px; border-radius: 10px; }
+  .name-remove svg { width: 16px; height: 16px; }
+
+  .name-subrow { gap: 8px; margin: -4px 0 2px 30px; padding: 8px 10px; }
+  .subrow-label { font-size: 1.05rem; }
+  .subrow-sep { font-size: 1.05rem; }
+  .name-subrow select { width: 96px; font-size: 1.1rem; padding: 10px 6px; }
+  .name-subrow .train-tag { width: 112px; }
+
+  .add-row { gap: 10px; margin-top: 12px; }
+  .add-btn { font-size: 1.1rem; padding: 12px 16px; border-radius: 10px; }
+  .add-btn svg { width: 18px; height: 18px; }
+
+  .sendbar { padding: 12px; }
+  .send-btn { font-size: 1.25rem; padding: 17px 16px; }
+  .send-btn svg { width: 22px; height: 22px; }
+
+  footer.note { font-size: 0.95rem; line-height: 1.75; }
 </style>
 </head>
 <body>
