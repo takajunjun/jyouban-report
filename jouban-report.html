@@ -1546,7 +1546,41 @@
     Array.prototype.forEach.call(els.nameList.querySelectorAll('.name-input'), fitNameFont);
   }
 
+
+  // 削除時に一覧全体を作り直さず、該当の行だけを取り除く（画面のスクロール位置が動かないようにする）
+  function removeNameRowInPlace(btn, i) {
+    var row = btn.closest ? btn.closest('.name-row') : btn.parentNode;
+    if (!row || names.length < 1 || els.nameList.querySelectorAll('.name-row').length !== names.length + 1) {
+      renderNames();
+      return;
+    }
+    var next = row.nextElementSibling;
+    if (next && next.classList.contains('name-subrow')) next.parentNode.removeChild(next);
+    row.parentNode.removeChild(row);
+    var rows = els.nameList.querySelectorAll('.name-row');
+    Array.prototype.forEach.call(rows, function (r, idx) {
+      var num = r.querySelector('.name-num');
+      if (num) num.textContent = String(idx + 1);
+      Array.prototype.forEach.call(r.querySelectorAll('[data-i]'), function (el) { el.setAttribute('data-i', String(idx)); });
+      var sub = r.nextElementSibling;
+      if (sub && sub.classList.contains('name-subrow')) {
+        sub.setAttribute('data-i', String(idx));
+        Array.prototype.forEach.call(sub.querySelectorAll('[data-i]'), function (el) { el.setAttribute('data-i', String(idx)); });
+      }
+    });
+    if (names.length === 1) {
+      var only = els.nameList.querySelector('.name-remove');
+      if (only && only.parentNode) only.parentNode.removeChild(only);
+    }
+    els.addNameBtn.disabled = names.length >= MAX_NAMES;
+    updateRosterAddOptions();
+    fitAllNameFonts();
+  }
+
   function renderNames() {
+    var keepY = window.pageYOffset;
+    var keepH = els.nameList.offsetHeight;
+    els.nameList.style.minHeight = keepH + 'px';
     els.nameList.innerHTML = names.map(function (row, i) {
       var removeBtn = names.length > 1
         ? '<button type="button" class="name-remove" data-i="' + i + '" aria-label="この氏名を削除"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>'
@@ -1637,7 +1671,7 @@
         var i = parseInt(btn.getAttribute('data-i'), 10);
         names.splice(i, 1);
         if (names.length === 0) names = [blankName()];
-        renderNames();
+        removeNameRowInPlace(btn, i);
         regenerate();
         saveStore({ names: names });
       });
@@ -1646,7 +1680,12 @@
     els.addNameBtn.disabled = names.length >= MAX_NAMES;
     updateRosterAddOptions();
     fitAllNameFonts();
-    if (window.requestAnimationFrame) window.requestAnimationFrame(fitAllNameFonts);
+    window.scrollTo(0, keepY);
+    if (window.requestAnimationFrame) window.requestAnimationFrame(function () {
+      els.nameList.style.minHeight = '';
+      fitAllNameFonts();
+      if (Math.abs(window.pageYOffset - keepY) > 1) window.scrollTo(0, keepY);
+    });
   }
 
   function updateRosterAddOptions() {
