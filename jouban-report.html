@@ -190,7 +190,7 @@
   .notice-box {
     font-family: "BIZ UDPGothic", "Noto Sans JP", sans-serif;
     display: grid;
-    gap: 6px;
+    gap: 12px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-left: 5px solid var(--accent);
@@ -256,21 +256,45 @@
 
   .notice-deadline {
     margin: 0;
-    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--ink);
-    line-height: 1.5;
+    line-height: 1.4;
     background: var(--accent-tint);
-    border-radius: 8px;
-    padding: 5px 12px;
+    border-radius: 10px;
+    padding: 8px 12px;
+  }
+  .notice-deadline .dl-label {
+    flex: none;
+    background: #1769B5;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 999px;
   }
 
   .notice-note {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--warn);
-    line-height: 1.5;
+    line-height: 1.55;
+    background: var(--warn-tint);
+    border-left: 5px solid var(--warn);
+    border-radius: 8px;
+    padding: 9px 12px;
+  }
+  .notice-note .nt-label {
+    display: block;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
   }
 
   .notice-alert {
@@ -284,14 +308,54 @@
 
   .notice-item {
     display: grid;
-    gap: 6px;
+    gap: 12px;
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 14px 16px;
   }
 
-  .notice-item + .notice-item {
-    margin-top: 8px;
-    padding-top: 10px;
-    border-top: 1px dashed var(--line);
+  .notice-points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    counter-reset: pt;
   }
+  .notice-points li {
+    position: relative;
+    padding-left: 30px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .notice-points li::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0.62em;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .notice-points.num li { counter-increment: pt; }
+  .notice-points.num li::before {
+    content: counter(pt);
+    left: 0;
+    top: 0.18em;
+    width: 1.45em;
+    height: 1.45em;
+    background: #1769B5;
+    color: #fff;
+    font-size: 0.85em;
+    font-weight: 700;
+    line-height: 1.45em;
+    text-align: center;
+  }
+  .notice-points li b { font-weight: 700; }
 
   .notice-item-title .notice-new {
     display: inline-block;
@@ -918,25 +982,38 @@
 
     <div class="notice-item">
       <p class="notice-item-title"><span class="notice-new">NEW</span>ストレスチェックの実施をお願いします</p>
-      <p class="notice-body">メールにてストレスチェック実施のリンクが送信されています。まずは実施するかどうかの選択をしていただき、その後スマホ等で実施をお願いします。実施しない、もしくは用紙での回答を希望の方は、連絡のうえ支店にお越しください。よろしくお願いします。</p>
-      <p class="notice-deadline">期限：10月31日まで</p>
+      <p class="notice-deadline"><span class="dl-label">期限</span>10月31日まで</p>
+      <ol class="notice-points num">
+        <li>メールにストレスチェックのリンクが届いています</li>
+        <li>まず<b>実施するかどうか</b>を選んでください</li>
+        <li>実施する方は、<b>スマホ等</b>で回答してください</li>
+      </ol>
+      <p class="notice-note"><span class="nt-label">実施しない・用紙で回答したい方</span>連絡のうえ、支店にお越しください。</p>
     </div>
 
     <div class="notice-item">
       <p class="notice-item-title"><span class="notice-new">NEW</span>年末調整の用紙提出のお願い</p>
-      <p class="notice-body">来週を目途に専用の用紙を皆様へ配布しますので、ご記入と必要書類を添付いただき、支店に提出をお願いします。</p>
-      <p class="notice-deadline">期限：11月20日まで</p>
-      <p class="notice-note">注意点：令和8年度中途入社の方は前職の源泉徴収票が必要となります。</p>
+      <p class="notice-deadline"><span class="dl-label">期限</span>11月20日まで</p>
+      <ol class="notice-points num">
+        <li>来週を目途に、専用の用紙を配布します</li>
+        <li>記入して、<b>必要書類を添付</b>してください</li>
+        <li>支店に提出してください</li>
+      </ol>
+      <p class="notice-note"><span class="nt-label">注意点</span>令和8年度中途入社の方は、前職の<b>源泉徴収票</b>が必要です。</p>
       <a class="notice-link-btn" href="https://www.nta.go.jp/users/gensen/nencho/index/kyuyosyotokusya.htm" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M14 3h7v7M10 14L21 3M21 14v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h6"/></svg>
-        年末調整の注意点まとめ（国税庁）
+        年末調整の注意点（国税庁）
       </a>
     </div>
 
     <div class="notice-item">
       <p class="notice-item-title">インフルエンザ予防接種費用の補助について</p>
-      <p class="notice-body">施設警備員の方を対象にインフルエンザの予防接種費用半額補助金が開始します、感染時の症状緩和も含めて接種ご検討ください。</p>
-      <p class="notice-deadline">接種期限：2027年1月31日まで</p>
+      <p class="notice-deadline"><span class="dl-label">接種期限</span>2027年1月31日まで</p>
+      <ul class="notice-points">
+        <li>対象は<b>施設警備員の方</b>です</li>
+        <li>予防接種費用の<b>半額補助</b>が始まります</li>
+        <li>感染時の症状をやわらげる効果もあります。接種をご検討ください</li>
+      </ul>
       <p class="notice-alert">領収書は接種した当月中に提出して下さい。</p>
 
       <details class="notice-fold">
@@ -979,7 +1056,10 @@
 
     <div class="notice-item">
       <p class="notice-item-title">カスハラ相談のご案内</p>
-      <p class="notice-body">お客様・施設利用者・通行人などからの行き過ぎた言動でお困りの際は、ひとりで抱えず支店にご相談ください。判断の目安や該当する例、その場での動き方をまとめた案内です。</p>
+      <ul class="notice-points">
+        <li>お客様・施設利用者・通行人などからの行き過ぎた言動でお困りの際は、<b>ひとりで抱えず</b>支店にご相談ください</li>
+        <li>判断の目安、該当する例、その場での動き方をまとめた案内です</li>
+      </ul>
       <a class="notice-link-btn" href="https://claude.ai/artifact/FAH687VtwyuZrMjktxVsfo" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M14 3h7v7M10 14L21 3M21 14v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h6"/></svg>
         案内を見る
